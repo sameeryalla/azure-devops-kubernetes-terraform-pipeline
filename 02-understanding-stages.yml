@@ -23,7 +23,7 @@ stages:
 - stage: DevDeploy
   dependsOn: 
   - Build
-  - QualityCheckJOB
+  - QualityCheck
   jobs: 
   - job: DevDeployJob
     steps:    
@@ -31,7 +31,7 @@ stages:
 - stage: QADeploy
   dependsOn: 
   - Build
-  - QualityCheckJOB
+  - QualityCheck
   jobs: 
   - job: QADeployJob
     steps:    
