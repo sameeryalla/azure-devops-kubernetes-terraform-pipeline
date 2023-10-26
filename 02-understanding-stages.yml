@@ -14,7 +14,7 @@ stages:
     steps:    
     - bash: echo build second job
 
-- stage: Quality Check
+- stage: QualityCheck
 - stage: DevDeploy
   jobs: 
   - job: DevDeploy Job
