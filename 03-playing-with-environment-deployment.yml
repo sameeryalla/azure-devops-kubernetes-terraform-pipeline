@@ -12,6 +12,27 @@ pool:
 #  vmImage: $(operatingsystem)
   vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Running on $(operatingsystem)
-  displayName: 'Run a one-line script'
+stages:
+- stage: Build
+  jobs:
+  - job: BuildJob
+    steps:
+    - bash: echo "do the build"
+- stage: DevDeploy
+  jobs:
+  - deployment: DevDeployjob
+    environment: Dev
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - script: echo deploy to dev
+- stage: QADeploy
+  jobs:
+  - deployment: QADeployjob
+    environment: QA
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - script: echo deploy to QA
