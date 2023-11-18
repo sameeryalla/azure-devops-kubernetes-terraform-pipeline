@@ -1,13 +1,15 @@
 # aws --version
 # aws eks --region us-east-1 update-kubeconfig --name in28minutes-cluster
 # Uses default VPC and Subnet. Create Your Own VPC and Private Subnets for Prod Usage.
-# terraform-backend-state-in28minutes-123
+# bucket arn arn:aws:s3:::terraform-backend-state-in28minutes-558
+# terraform-backend-state-in28minutes-558
 # AKIA4AHVNOD7OOO6T4KI
+
 
 
 terraform {
   backend "s3" {
-    bucket = "mybucket" # Will be overridden from build
+    bucket = "terraform-backend-state-in28minutes-558" # Will be overridden from build
     key    = "path/to/my/key" # Will be overridden from build
     region = "us-east-1"
   }
@@ -32,7 +34,7 @@ module "in28minutes-cluster" {
   source          = "terraform-aws-modules/eks/aws"
   cluster_name    = "in28minutes-cluster"
   cluster_version = "1.23"
-  subnet_ids         = ["subnet-0ba16627", "subnet-02db6b4a", "subnet-e08479ba"] #CHANGE # Donot choose subnet from us-east-1e
+  subnet_ids         = ["subnet-02621b989e7086df9", "subnet-04f83bf78b8fe63cf"] #CHANGE # Donot choose subnet from us-east-1e
   vpc_id          = aws_default_vpc.default.id
 
   //Newly added entry to allow connection to the api server
