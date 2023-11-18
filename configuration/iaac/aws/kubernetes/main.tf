@@ -25,28 +25,37 @@ provider "kubernetes" {
   host                   = data.aws_eks_cluster.cluster.endpoint
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
   token                  = data.aws_eks_cluster_auth.cluster.token
-  version                = "~> 2.12"
+  //version                = "~> 2.12"
 }
 
 module "in28minutes-cluster" {
   source          = "terraform-aws-modules/eks/aws"
   cluster_name    = "in28minutes-cluster"
-  cluster_version = "1.14"
-  subnets         = ["subnet-3f7b2563", "subnet-4a7d6a45"] #CHANGE
-  #subnets = data.aws_subnet_ids.subnets.ids
+  cluster_version = "1.23"
+  subnet_ids         = ["subnet-0ba16627", "subnet-02db6b4a", "subnet-e08479ba"] #CHANGE # Donot choose subnet from us-east-1e
   vpc_id          = aws_default_vpc.default.id
 
-  #vpc_id         = "vpc-1234556abcdef"
+  //Newly added entry to allow connection to the api server
+  //Without this change error in step 163 in course will not go away
+  cluster_endpoint_public_access  = true
 
-  node_groups = [
-    {
-      instance_type = "t2.micro"
-      max_capacity  = 5
-      desired_capacity = 3
-      min_capacity  = 3
+# EKS Managed Node Group(s)
+  eks_managed_node_group_defaults = {
+    instance_types = ["t2.small", "t2.medium"]
+  }
+
+  eks_managed_node_groups = {
+    blue = {}
+    green = {
+      min_size     = 1
+      max_size     = 10
+      desired_size = 1
+
+      instance_types = ["t2.medium"]
     }
-  ]
+  }
 }
+
 
 data "aws_eks_cluster" "cluster" {
   name = module.in28minutes-cluster.cluster_id
