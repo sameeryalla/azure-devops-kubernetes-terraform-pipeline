@@ -15,10 +15,9 @@ stages:
     steps:
     - bash: echo build First Job
     displayName: 'Second build Job'
-
-- stage: QualityCheck
   
 - stage: DevDeploy
+  dependsOn: Build
   jobs:
   - job: DevDeployJob
     steps:
@@ -32,6 +31,7 @@ stages:
     - bash: echo QADeploy First Job
     displayName: 'First QADeploy build Job'
 - stage: ProdDeploy
+  dependsOn: QADeploy
   jobs:
   - job: PRODDeployJob
     steps:
