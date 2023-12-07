@@ -29,12 +29,12 @@ jobs:
 - job: job3
   dependsOn: job1
   steps:
-  - script: echo Job2 - Hello, world, chanaged!
+  - script: echo Job3 - Hello, world, chanaged!
     displayName: 'Run a one-line script'
 - job: job4
   dependsOn: 
   - job2
   - job3
   steps:
-  - script: echo Job2 - Hello, world, chanaged!
+  - script: echo Job4 - Hello, world, chanaged!
     displayName: 'Run a one-line script'
