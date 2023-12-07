@@ -31,7 +31,9 @@ stages:
     - bash: echo QADeploy First Job
     displayName: 'First QADeploy build Job'
 - stage: ProdDeploy
-  dependsOn: QADeploy
+  dependsOn: 
+  - DevDeploy
+  - QADeploy
   jobs:
   - job: PRODDeployJob
     steps:
