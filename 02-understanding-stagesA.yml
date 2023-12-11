@@ -10,7 +10,7 @@ stages:
   - job: FirstBuildJob
     steps:
     - bash: echo build First Job
-    - bash: $(PipelineLevelvariable)
+    - bash: echo $(PipelineLevelvariable)
     displayName: 'First build Job'
   - job: SecondBuildJob
     steps:
