@@ -11,6 +11,7 @@ stages:
     steps:
     - bash: echo build First Job
     - bash: echo $(PipelineLevelvariable)
+    - bash: echo $(Build.BuildNumber)
     - bash: echo $(Build.BuildId)
     - bash: echo $(Build.SourceBranchName)
     - bash: echo $(Build.SourcesDirectory)
@@ -31,6 +32,9 @@ stages:
   - job: DevDeployJob
     steps:
     - bash: echo $(environment)Deploy First Job
+    - bash: echo $(System.DefaultWorkingDirectory)
+    - bash: ls -R $(System.DefaultWorkingDirectory)
+    - bash: echo $(Build.ArtifactStagingDirectory)
     displayName: 'First DevDeploy build Job'
   
 - stage: QADeploy
@@ -49,4 +53,7 @@ stages:
   - job: PRODDeployJob
     steps:
     - bash: echo PRODDeploy First Job
+    - bash: echo $(System.DefaultWorkingDirectory)
+    - bash: ls -R $(System.DefaultWorkingDirectory)
+    - bash: echo $(Build.ArtifactStagingDirectory)
     displayName: 'First PRODDeploy build Job'
